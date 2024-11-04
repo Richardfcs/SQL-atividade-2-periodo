@@ -163,8 +163,8 @@ select pro.nome "Nome Produto", concat('R$ ', format(sum(pro.valorVenda), 2, 'de
 
 -- teste dos numeros
 select f.nome "Nome", f.email "E-mail", t.numero "Telefone"
-		from fornecedor f
-        	join telefone t on t.Fornecedor_cpf_cnpj = f.cpf_cnpj;
+	from fornecedor f
+        join telefone t on t.Fornecedor_cpf_cnpj = f.cpf_cnpj;
 
 -- 12 Relatório 12 - Lista dos Produtos mais vendidos, informando a quantidade (total) de vezes que cada produto participou em vendas e o total de valor apurado com a venda do produto,
 -- trazendo as colunas (Nome Produto, Quantidade (Total) Vendas, Valor Total Recebido pela Venda do Produto),
