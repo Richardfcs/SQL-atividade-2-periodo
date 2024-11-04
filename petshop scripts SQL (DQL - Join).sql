@@ -11,7 +11,7 @@ select emp.nome as "Nome", emp.cpf "CPF" , date_format(emp.dataAdm, '%d/%m/%Y') 
 		left join departamento dep on dep.idDepartamento = emp.Departamento_idDepartamento
         left join telefone tel on Empregado_cpf = emp.cpf
 			where dataAdm between "2019-01-01" and "2022-03-31"
-            order by dataAdm desc;
+            	order by dataAdm desc;
 
 -- um ano a menos para aparecer a tabela --        
 select emp.nome as "Nome", emp.cpf "CPF" , date_format(emp.dataAdm, '%d/%m/%Y') "Data de Admissão",
@@ -21,7 +21,7 @@ select emp.nome as "Nome", emp.cpf "CPF" , date_format(emp.dataAdm, '%d/%m/%Y') 
 		left join departamento dep on dep.idDepartamento = emp.Departamento_idDepartamento
         left join telefone tel on Empregado_cpf = emp.cpf
 			where dataAdm between "2019-01-01" and "2023-03-31"
-            order by dataAdm desc;		
+            	order by dataAdm desc;		
         
 -- 02  Lista dos empregados que ganham menos que a média salarial dos funcionários do Petshop, 
 -- trazendo as colunas (Nome Empregado, CPF Empregado, Data Admissão,  Salário, Departamento, Número de Telefone),
@@ -34,7 +34,7 @@ select emp.nome as "Nome", emp.cpf "CPF" , date_format(emp.dataAdm, '%d/%m/%Y') 
 		left join departamento dep on dep.idDepartamento = emp.Departamento_idDepartamento
         left join telefone tel on Empregado_cpf = emp.cpf
 			where salario < (select avg(salario) from empregado)
-            order by nome;
+            	order by nome;
             
 -- apenas para ver a média            
 select concat('R$ ', format(avg(salario), 2, 'de_DE')) "Média Salarial" from empregado;
@@ -49,8 +49,8 @@ select dep.nome as "Nome Departamento", count(emp.Departamento_idDepartamento) "
  concat('R$ ', format(avg(emp.comissao), 2, 'de_DE')) "Média da Comissão"
 	from departamento dep
 		inner join empregado emp ON dep.idDepartamento = emp.Departamento_idDepartamento
-        group by dep.nome
-    order by dep.nome;
+        	group by dep.nome
+    			order by dep.nome;
     
 -- 04 Relatório 4 - Lista dos empregados com a quantidade total de vendas já realiza por cada Empregado,
 -- além da soma do valor total das vendas do empregado e a soma de suas comissões,
@@ -62,8 +62,8 @@ select emp.nome "Nome", emp.cpf "CPF", emp.sexo "Gênero", count(ven.Empregado_c
  concat('R$ ', format(sum(ven.comissao), 2, 'de_DE')) "Total Comissão das Vendas"
 	from empregado emp
 		join venda ven on emp.cpf = ven.Empregado_cpf and ven.comissao and ven.valor
-        group by emp.cpf
-	order by count(ven.Empregado_cpf) desc; -- coloquei desc para manter o maior no topo --
+        	group by emp.cpf
+				order by count(ven.Empregado_cpf) desc; -- coloquei desc para manter o maior no topo --
     
 SELECT count(idVenda) from venda; -- só para contar mesmo --
 
@@ -80,8 +80,8 @@ select emp.nome as "Nome", emp.cpf "CPF" , sexo "Gênero",
     from empregado emp
 		inner join itensservico its on emp.cpf = its.Empregado_cpf
         left join venda ven on emp.cpf = ven.Empregado_cpf
-        group by emp.cpf
-	order by count(its.valor) desc;
+        	group by emp.cpf
+				order by count(its.valor) desc;
         
 -- 06 Relatório 6 - Lista dos serviços já realizados por um Pet,
 -- trazendo as colunas (Nome do Pet, Data do Serviço, Nome do Serviço, Quantidade, Valor, Empregado que realizou o Serviço),
@@ -94,7 +94,7 @@ select pet.nome as "Nome do Pet", date_format(ven.data, '%d/%m/%Y') "Data do Ser
 		join venda ven on ven.idVenda = its.Venda_idVenda 
 		join empregado emp on emp.cpf = its.Empregado_cpf 
 		join servico ser on ser.idServico = its.Servico_idServico
-	order by ven.data desc;
+			order by ven.data desc;
 
 -- 07 Lista das vendas já realizados para um Cliente,
 -- trazendo as colunas (Data da Venda, Valor, Desconto, Valor Final, Empregado que realizou a venda),
@@ -106,8 +106,8 @@ select date_format(ven.data, '%d/%m/%Y') "Data da Venda", concat('R$ ', format(v
 	from venda ven
 		join empregado emp on emp.cpf = ven.Empregado_cpf
 		join cliente cli on cli.cpf = ven.Cliente_cpf
-		where cli.cpf = "001.172.372-64"
-	order by ven.data desc;
+			where cli.cpf = "001.172.372-64"
+				order by ven.data desc;
 
 -- 08 Relatório 8 - Lista dos 10 serviços mais vendidos, trazendo a quantidade vendas cada serviço, o somatório total dos valores de serviço vendido,
 -- trazendo as colunas (Nome do Serviço, Quantidade Vendas, Total Valor Vendido),
@@ -118,9 +118,9 @@ select ser.nome "Nome do Serviço",
  concat('R$ ', format(sum(its.valor), 2, 'de_DE')) "Total Valor Vendido"
 	from servico ser
 		inner join itensservico its on Servico_idServico = ser.idServico
-        group by ser.nome
-	order by sum(its.quantidade) desc
-    limit 10;
+        	group by ser.nome
+				order by sum(its.quantidade) desc
+    				limit 10;
     
 -- !!! APARTIR DAQUI MEU CÓDIGO FOI PERDIDO, PROCUREI NOS HIISTÓRICO DOS DOCUMENTOS E COLEI, NÃO SEI SE ESTÁ 100% !!!--
     
@@ -131,8 +131,8 @@ select ser.nome "Nome do Serviço",
 
 select tipo "Tipo Forma Pagamento", count(tipo)"Quantidade Vendas", concat('R$ ', format(sum(valorPago), 2, 'de_DE')) "Total Valor Vendido"
 	from formapgvenda 
-    group by tipo
-    order by count(tipo) desc; -- obs, fiz alter table pois tinha dinherio
+    	group by tipo
+    		order by count(tipo) desc; -- obs, fiz alter table pois tinha dinherio
 
 -- 10 Relatório 10 - Balaço das Vendas, informando a soma dos valores vendidos por dia,
 -- trazendo as colunas (Data Venda, Quantidade de Vendas, Valor Total Venda),
@@ -142,10 +142,10 @@ select date_format(ven.data, '%d/%m/%Y') as "Data Venda",
 (count(ivp.quantidade) + count(its.quantidade)) "Quantidade de Vendas",
  concat('R$ ', format((ven.valor), 2, 'de_DE')) "Valor Total Venda"
 	from venda ven
-    left join itensvendaprod ivp on ivp.Venda_idVenda = ven.idVenda
-	left join itensservico its on its.Venda_idVenda = ven.idVenda
-    group by (ven.idVenda)
-order by ven.data desc;
+    	left join itensvendaprod ivp on ivp.Venda_idVenda = ven.idVenda
+		left join itensservico its on its.Venda_idVenda = ven.idVenda
+    		group by (ven.idVenda)
+				order by ven.data desc;
 
 -- 11 Relatório 11 - Lista dos Produtos, informando qual Fornecedor de cada produto,
 -- trazendo as colunas (Nome Produto, Valor Produto, Categoria do Produto, Nome Fornecedor, Email Fornecedor, Telefone Fornecedor),
@@ -154,17 +154,17 @@ order by ven.data desc;
 select pro.nome "Nome Produto", concat('R$ ', format(sum(pro.valorVenda), 2, 'de_DE')) "Valor Produto", pro.marca "Categoria do Produto",
  coalesce(max(frn.nome), 'sem registro') "Nome Fornecedor", coalesce(max(frn.email), 'sem registro') "Email Fornecedor", coalesce(max(tel.numero), 'sem registro') "Telefone Fornecedor"
 	from produtos pro
-    left join itenscompra itc on itc.Produtos_idProduto = pro.idProduto
-    left join compras com on com.idCompra = itc.Compras_idCompra
-    left join fornecedor frn on frn.cpf_cnpj = com.Fornecedor_cpf_cnpj
-    left join telefone tel on tel.Fornecedor_cpf_cnpj = frn.cpf_cnpj
-    group by pro.idProduto
- order by pro.nome;
+    	left join itenscompra itc on itc.Produtos_idProduto = pro.idProduto
+    	left join compras com on com.idCompra = itc.Compras_idCompra
+    	left join fornecedor frn on frn.cpf_cnpj = com.Fornecedor_cpf_cnpj
+    	left join telefone tel on tel.Fornecedor_cpf_cnpj = frn.cpf_cnpj
+    		group by pro.idProduto
+ 				order by pro.nome;
 
 -- teste dos numeros
 select f.nome "Nome", f.email "E-mail", t.numero "Telefone"
 		from fornecedor f
-        join telefone t on t.Fornecedor_cpf_cnpj = f.cpf_cnpj;
+        	join telefone t on t.Fornecedor_cpf_cnpj = f.cpf_cnpj;
 
 -- 12 Relatório 12 - Lista dos Produtos mais vendidos, informando a quantidade (total) de vezes que cada produto participou em vendas e o total de valor apurado com a venda do produto,
 -- trazendo as colunas (Nome Produto, Quantidade (Total) Vendas, Valor Total Recebido pela Venda do Produto),
@@ -173,6 +173,6 @@ select f.nome "Nome", f.email "E-mail", t.numero "Telefone"
 select pro.nome "Nome Produto", count(ivp.quantidade) "Quantidade (Total) Vendas",
  concat('R$ ', format(sum(ivp.valor), 2, 'de_DE'))  "Valor Total Recebido pela Venda do Produto)"
 	from produtos pro
-	join itensvendaprod ivp on ivp.Produto_idProduto = pro.idProduto
-	group by pro.nome
-order by count(ivp.quantidade) desc
+		join itensvendaprod ivp on ivp.Produto_idProduto = pro.idProduto
+			group by pro.nome
+				order by count(ivp.quantidade) desc
