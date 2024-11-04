@@ -75,7 +75,7 @@ SELECT count(idVenda) from venda; -- só para contar mesmo --
 select emp.nome as "Nome", emp.cpf "CPF" , sexo "Gênero",
 	concat('R$ ', format(emp.salario, 2, 'de_DE')) "Salário",
     count(its.quantidade)"Quantidade Vendas com Serviço",
-    concat('R$ ', format(sum(its.valor), 2, 'de_DE'))"Total Valor Vendido com Serviço",
+    concat('R$ ', format(sum(its.valor - its.desconto) * its.quantidade, 2, 'de_DE'))"Total Valor Vendido com Serviço",
     coalesce(concat('R$ ', format(sum(ven.comissao), 2, 'de_DE')), "Sem comissão com serviços" ) "Total Comissão das Vendas com Serviço"
     from empregado emp
 		inner join itensservico its on emp.cpf = its.Empregado_cpf
