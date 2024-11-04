@@ -58,7 +58,7 @@ select dep.nome as "Nome Departamento", count(emp.Departamento_idDepartamento) "
 -- ordenado por quantidade total de vendas realizadas
 
 select emp.nome "Nome", emp.cpf "CPF", emp.sexo "Gênero", count(ven.Empregado_cpf) "quantidade de vendas" ,
- concat('R$ ', format(sum(ven.valor), 2, 'de_DE')) "Total Valor Vendido", 
+ concat('R$ ', format(sum(ven.valor - ven.desconto), 2, 'de_DE')) "Total Valor Vendido", 
  concat('R$ ', format(sum(ven.comissao), 2, 'de_DE')) "Total Comissão das Vendas"
 	from empregado emp
 		join venda ven on emp.cpf = ven.Empregado_cpf and ven.comissao and ven.valor
